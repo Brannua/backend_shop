@@ -132,3 +132,50 @@
       }
     }
     ```
+
+- MongoDB
+
+  - key-value 型数据库
+
+  - 基于文档 , 存储所需空间大
+
+  - 在需要频繁读写数据库的场景下性能比关系型数据库更高
+
+  - 不支持事务操作
+    - 事务指的是逻辑上的一组操作 , 组成这组操作的各个单元要么全都成功 , 要么全都失败
+    - 事务作用 : 保证在一个事务中多次SQL操作要么全都成功 , 要么全都失败.
+  
+  - 而关系型数据库适用于含有较多表之间的级联查询的场景
+
+  - [官网](https://www.mongodb.com)
+
+  - [doc](https://docs.mongodb.com/manual/)
+
+  - 图形化管理工具 Robo 3T : [官网](https://robomongo.org/)
+
+  - mongoose : Node 和 MongoDB 数据通信的数据建模库
+
+    ```
+    npm install mongoose --save    
+    ```
+
+  - mongoose.Schema 定义数据模型
+  
+  - 加载所有数据模型
+
+    ```
+    npm install glob --save
+    ```
+
+- 前后端通信的跨域解决方案 koa2-cors 中间件
+
+  ```
+  const cors = require('koa2-cors');
+  app.use(cors({
+    origin: [
+      'http://localhost:8080'
+    ],
+    credentials: true
+  }));
+  ```
+  
