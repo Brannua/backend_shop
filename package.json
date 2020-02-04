@@ -9,6 +9,7 @@
   "author": "lpj",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^3.0.6",
     "glob": "^7.1.6",
     "koa": "^2.11.0",
     "koa-bodyparser": "^4.2.1",

@@ -13,7 +13,7 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-})
+});
 
 // 发布模型
 mongoose.model('User', userSchema);

@@ -179,3 +179,39 @@
   }));
   ```
   
+- 密码加盐加密 bcrypt
+
+  ```
+  npm install bcrypt@3.0.6 --save
+  ```
+
+  - 实现方式一 ( 模块化处理 + Promise处理异步 )
+
+    ```
+    // handle in /bcrypt/bcrypt.js
+
+    // use in /controller/user.js
+    const addSaltToPwd = require('../bcrypt/bcrypt.js');
+    
+    const User = mongoose.model('User');
+    let newUser = new User(ctx.request.body);
+    newUser.passWord = await addSaltToPwd(newUser.passWord);
+    ```
+
+  - 实现方式二 ( 使用钩子函数 userSchema.pre('save', callback(next)) )
+
+    ```
+    // use in /model/User.js
+    const bcrypt = require('bcrypt);
+    
+    userSchema.pre('save', function (next) {
+      bcrypt.genSalt(10, (err, salt) => {
+        if (err) return next(err);
+        bcrypt.hash(this.passWord, salt, (err, hash) => {
+          if (err) return next(err);
+          this.passWord = hash;
+          next();
+        });
+      });
+    });
+    ```
