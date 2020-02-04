@@ -215,3 +215,23 @@
       });
     });
     ```
+
+  - 用户登录功能中解耦密码比较模块
+
+    - before
+
+      ```
+      // In /model/User.js
+      userSchema.methods = {
+        comparePwd: (loginPwd, dbPwd) => {...}
+      }
+      ```
+
+    - after
+
+      ```
+      // In /bcrypt/comparePwd.js
+
+      // Use in /controller/user.js 用户登录逻辑
+      ```
+
