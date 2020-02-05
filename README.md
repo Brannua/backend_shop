@@ -235,3 +235,35 @@
       // Use in /controller/user.js 用户登录逻辑
       ```
 
+- 商品分类功能 ( 数据库中维护两个集合 )
+
+  - 商品类别集合 types 中的每一条数据维护两个字段
+
+    - typeId
+
+    - typeName
+
+  - 商品信息集合 products 中的每一条数据除维护商品具体信息外 , 维护着和 types 中对应的 typeId 字段
+
+- Tips
+
+  - 作为一个学习和练手的项目 , 该项目并没有设计用户上传商品数据的功能 , 故采用 Node.js 读取 /data/*.json 文件 , 并将数据保存到 MongoDB 数据库中
+
+    - 读取文件并插入数据库功能单独封装到 /util/saveJsonDataToDB.js
+
+    - 数据模型定义
+
+    - 路由配置
+
+    - 定义 controller 调用 saveJsonDataToDB.js
+
+    - 浏览器输入配置的路由回车即可执行对应 controller 中数据存入数据库的操作
+
+  - 由于 /data/product.json 中每条商品数据都没有对应的商品分类 ID , 故使用 /data/type.json 文件给商品随机分配类型
+
+    ```
+    // In /controller/product.js
+    product.type = Math.ceil(Math.random() * 8);
+    ```
+
+    
