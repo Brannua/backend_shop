@@ -4,7 +4,7 @@ const mongoose = require('mongoose'),
 // 创建模型
 const productSchema = new Schema({
   id: Schema.Types.ObjectId,
-  type: Number,
+  typeId: Number,
   name: String,
   img: String,
   price: Number,

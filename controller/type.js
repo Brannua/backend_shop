@@ -11,4 +11,19 @@ router.get('/readAndSaveTypeData', async (ctx) => {
   ctx.body = '数据开始导入数据库';
 });
 
+router.get('/getProductTypes', async (ctx) => {
+  const Type = mongoose.model('Type');
+  await Type.find({}).exec().then((res) => {
+    ctx.body = {
+      data: res,
+      code: 200,
+    }
+  }).catch((err) => {
+    ctx.body ={
+      msg: err,
+      code: 404,
+    }
+  });
+});
+
 module.exports = router;

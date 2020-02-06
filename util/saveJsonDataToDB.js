@@ -1,5 +1,5 @@
-
-const fs = require('fs');
+const fs = require('fs'),
+  mongoose = require('mongoose');
 
 /* 
   filePath: 读取的文件
@@ -14,6 +14,9 @@ module.exports = (filePath, Model) => {
       data = JSON.parse(data);
       data.map((value, index) => {
         let item = new Model(value);
+        if (mongoose.model('Product') === Model) {
+          item.typeId = Math.ceil(Math.random() * 8);
+        }
         item.save().then(() => {
           console.log(`success: ${++count}`);
         }).catch((err) => {
