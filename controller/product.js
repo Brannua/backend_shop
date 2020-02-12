@@ -29,4 +29,21 @@ router.get('/getProductsByType', async (ctx) => {
     });
 });
 
+router.get('/getProductDetailById', async (ctx) => {
+  const Product = mongoose.model('Product');
+  await Product.findOne({ _id: ctx.query.id }).exec()
+    .then((res) => {
+      ctx.body = {
+        code: 200,
+        data: res,
+      }
+    })
+    .catch((err) => {
+      ctx.body = {
+        code: 404,
+        msg: err,
+      }
+    });
+});
+
 module.exports = router;
