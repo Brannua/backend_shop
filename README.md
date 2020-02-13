@@ -266,4 +266,18 @@
     product.type = Math.ceil(Math.random() * 8);
     ```
 
-    
+- 多集合关联查询
+
+  ```
+  // /model/Cart.js
+  const cartSchema = new Schema({
+    productId: {
+      ref: 'Product' // 指向联合查询的model
+    }
+  });
+  mongoose.model('Cart', cartSchema);
+
+  // /controller/cart.js
+  const Cart = mongoose.model('Cart');
+  await Cart.find({ userId: ctx.query.userId }).populate('productId').exec()
+  ```
