@@ -2,11 +2,9 @@
 
 - 开发环境
 
-  - Node.js ( v10.15.3 ) --> [Node.js-doc](https://nodejs.org/zh-cn/)
+  - [Node.js v10.15.3](https://nodejs.org/zh-cn/)
 
-  - 模块化规范遵循 [commonJs](http://javascript.ruanyifeng.com/nodejs/module.html)
-
-  - Koa --> [Koa-doc](https://koa.bootcss.com/)
+  - [Koa2](https://koa.bootcss.com/)
 
     ```
     npm init // 生成 package.json
@@ -14,7 +12,9 @@
     npm install koa --save // 安装 koa
     ```
 
-- 异步编程 async/await 解决 callbackHell , 执行 async 函数返回 Promise 对象
+- 模块化规范遵循 : [commonJs](http://javascript.ruanyifeng.com/nodejs/module.html)
+
+- es7 异步编程 async/await 解决 callbackHell , 执行 async 函数返回 Promise 对象
 
   ```
   // demo
@@ -61,9 +61,7 @@
   })
   ```
 
-- koa-bodyparser 中间件 **自动解析** 前端 post 请求发送到后端的参数
-
-  - [doc](https://www.npmjs.com/package/koa-bodyparser)
+- [koa-bodyparser](https://www.npmjs.com/package/koa-bodyparser) 中间件 **自动解析** 前端 post 请求发送到后端的参数
 
   - 安装
 
@@ -71,9 +69,7 @@
     npm install koa-bodyparser --save
     ```
 
-- koa-router
-
-  - [doc](https://github.com/ZijianHe/koa-router)
+- [koa-router](https://github.com/ZijianHe/koa-router)
 
   - 安装
 
@@ -93,79 +89,41 @@
       })
       ```
 
-- cookie
+- [cookie](http://javascript.ruanyifeng.com/bom/cookie.html)
 
-  - [doc](http://javascript.ruanyifeng.com/bom/cookie.html)
+  - 项目虽并没有用到cookie, 但是前端向后端发送请求都会携带cookie
 
-  - 手动封装管理 cookie 的 API
-  
-    ```
-    let cookieManager = {
-
-      // 设置 cookie
-      setCookie(name, value, time) {
-        document.cookie = name + '=' + value + ';max-age=' + time
-        return this // 实现链式调用
-      },
-
-      // 删除 cookie
-      removeCookie(name) {
-        this.setCookie(name, '', -1)
-      },
-
-      // 查询 cookie
-      getCookie(name, callback) {
-
-        let allCookieArr = document.cookie.split('; ')
-
-        for (var i = 0; i < allCookieArr.length; i ++) {
-          let itemCookieArr = allCookieArr[i].split('=')
-          if (itemCookieArr[0] == name) {
-            callback(itemCookieArr[1])
-            return this // 实现链式调用
-          }
-        }
-
-        //如果for循环结束没找到所要查找的cookie就给回调函数传undefined
-        callback( undefined )
-        return this
-      }
-    }
-    ```
-
-- MongoDB
+- [MongoDB](https://www.mongodb.com)
 
   - key-value 型数据库
 
   - 基于文档 , 存储所需空间大
 
-  - 在需要频繁读写数据库的场景下性能比关系型数据库更高
-
   - 不支持事务操作
     - 事务指的是逻辑上的一组操作 , 组成这组操作的各个单元要么全都成功 , 要么全都失败
     - 事务作用 : 保证在一个事务中多次SQL操作要么全都成功 , 要么全都失败.
-  
-  - 而关系型数据库适用于含有较多表之间的级联查询的场景
 
-  - [官网](https://www.mongodb.com)
+  - 在需要频繁读写数据库的场景下性能比关系型数据库更高
+
+  - 而关系型数据库适用于含有较多表之间的级联查询的场景
 
   - [doc](https://docs.mongodb.com/manual/)
 
-  - 图形化管理工具 Robo 3T : [官网](https://robomongo.org/)
+- [图形化管理工具 Robo 3T](https://robomongo.org/)
 
-  - mongoose : Node 和 MongoDB 数据通信的数据建模库
+- mongoose : Node 和 MongoDB 数据通信的数据建模库
 
-    ```
-    npm install mongoose --save    
-    ```
+  ```
+  npm install mongoose --save    
+  ```
 
   - mongoose.Schema 定义数据模型
-  
-  - 加载所有数据模型
 
-    ```
-    npm install glob --save
-    ```
+- 加载所有数据模型
+
+  ```
+  npm install glob --save
+  ```
 
 - 前后端通信的跨域解决方案 koa2-cors 中间件
 
@@ -178,6 +136,8 @@
     credentials: true
   }));
   ```
+
+    - Tips: ```credentials: true``` 是为了能够在后端代码中接受cookie , 否则由于cors的安全性原因后端无法接受cookie , 进而导致session失效
   
 - 密码加盐加密 bcrypt
 
