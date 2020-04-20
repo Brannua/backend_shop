@@ -1,8 +1,13 @@
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
-let objectId = Schema.Types.ObjectId;
+/**
+ * @description 购物车 数据模型
+ * @author Brannua
+ */
 
-// 创建模型
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+let objectId = Schema.Types.ObjectId
+
+// 定义数据模型
 const cartSchema = new Schema({
   id: objectId,
   userId: objectId,
@@ -10,8 +15,11 @@ const cartSchema = new Schema({
     type: objectId,
     ref: 'Product'
   },
-  createDate: {type: Date, default: Date.now()},
-});
+  createDate: {
+    type: Date,
+    default: Date.now()
+  },
+})
 
-// 发布模型
-mongoose.model('Cart', cartSchema);
+// 发布数据模型
+mongoose.model('Cart', cartSchema)

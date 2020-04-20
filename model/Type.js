@@ -1,12 +1,17 @@
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+/**
+ * @description 商品类型 数据模型
+ * @author Brannua
+ */
 
-// 创建模型
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+// 定义数据模型
 const typeSchema = new Schema({
   id: Schema.Types.ObjectId,
   typeId: Number,
   typeName: String,
-});
+})
 
-// 发布模型
-mongoose.model('Type', typeSchema);
+// 发布数据模型
+mongoose.model('Type', typeSchema)

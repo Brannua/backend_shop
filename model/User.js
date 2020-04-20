@@ -1,7 +1,12 @@
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+/**
+ * @description 用户 数据模型
+ * @author Brannua
+ */
 
-// 创建模型
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+// 定义数据模型
 const userSchema = new Schema({
   userId: Schema.Types.ObjectId,
   userName: {
@@ -13,7 +18,7 @@ const userSchema = new Schema({
     type: Date,
     default: Date.now()
   },
-});
+})
 
-// 发布模型
-mongoose.model('User', userSchema);
+// 发布数据模型
+mongoose.model('User', userSchema)

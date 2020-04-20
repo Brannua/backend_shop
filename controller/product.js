@@ -1,49 +1,55 @@
-const Router = require('koa-router'),
-  mongoose = require('mongoose'),
-  path = require('path'),
-  saveJsonDataToDB = require('../util/saveJsonDataToDB.js');
-let router = new Router();
+/**
+ * @description product controller
+ * @author Brannua
+ */
 
-// 读取 /data/product.json 数据 , 然后保存到数据库
-router.get('/readAndSaveProductData', async (ctx) => {
-  let filePath = path.resolve(__dirname, '../data/product.json');
-  saveJsonDataToDB(filePath, mongoose.model('Product'));
-  ctx.body = '数据开始导入数据库';
-});
+const Router = require('koa-router')
+const router = new Router()
+const mongoose = require('mongoose')
+const { getProductOnThisTypeFailInfo, getProductDetailFailInfo } = require('./_errorInfo')
 
+// 查询某一类商品
 router.get('/getProductsByType', async (ctx) => {
-  let { typeId, start, count } = ctx.query;
-  const Product = mongoose.model('Product');
-  await Product.find({typeId}).skip(parseInt(start)).limit(parseInt(count)).exec()
+
+  const { typeId, start, count } = ctx.query
+  const Product = mongoose.model('Product')
+
+  await Product.find({ typeId })
+    .skip(parseInt(start))
+    .limit(parseInt(count))
+    .exec()
     .then((res) => {
       ctx.body = {
         code: 200,
-        data: res,
+        data: res
       }
     })
     .catch((err) => {
-      ctx.body = {
-        code: 404,
-        msg: err,
-      }
-    });
-});
+      console.error(err)
+      ctx.body = getProductOnThisTypeFailInfo
+    })
 
+})
+
+// 获取商品详情信息
 router.get('/getProductDetailById', async (ctx) => {
-  const Product = mongoose.model('Product');
-  await Product.findOne({ _id: ctx.query.id }).exec()
+
+  const Product = mongoose.model('Product')
+  const { id } = ctx.query
+
+  await Product.findOne({ _id: id })
+    .exec()
     .then((res) => {
       ctx.body = {
         code: 200,
-        data: res,
+        data: res
       }
     })
     .catch((err) => {
-      ctx.body = {
-        code: 404,
-        msg: err,
-      }
-    });
-});
+      console.error(err)
+      ctx.body = getProductDetailFailInfo
+    })
 
-module.exports = router;
+})
+
+module.exports = router

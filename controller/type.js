@@ -1,29 +1,30 @@
-const Router = require('koa-router'),
-  mongoose = require('mongoose'),
-  path = require('path'),
-  saveJsonDataToDB = require('../util/saveJsonDataToDB.js');
-let router = new Router();
+/**
+ * @description type controller
+ * @author Brannua
+ */
 
-// 读取 /data/type.json 数据 , 然后保存到数据库
-router.get('/readAndSaveTypeData', async (ctx) => {
-  let filePath = path.resolve(__dirname, '../data/type.json');
-  saveJsonDataToDB(filePath, mongoose.model('Type'));
-  ctx.body = '数据开始导入数据库';
-});
+const Router = require('koa-router')
+const router = new Router()
+const mongoose = require('mongoose')
+const { getProductTypesFailInfo } = require('./_errorInfo')
 
+// 查询商品分类
 router.get('/getProductTypes', async (ctx) => {
-  const Type = mongoose.model('Type');
-  await Type.find({}).exec().then((res) => {
+
+  const Type = mongoose.model('Type')
+
+  await Type.find({})
+    .exec()
+    .then((res) => {
     ctx.body = {
       data: res,
       code: 200,
     }
   }).catch((err) => {
-    ctx.body ={
-      msg: err,
-      code: 404,
-    }
-  });
-});
+    console.error(err)
+    ctx.body = getProductTypesFailInfo
+  })
 
-module.exports = router;
+})
+
+module.exports = router

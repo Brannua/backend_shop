@@ -1,25 +1,34 @@
-/* 加盐加密 */
-const bcrypt = require('bcrypt');
+/**
+ * @description 密码加盐加密
+ * @author Brannua
+ */
+
+const bcrypt = require('bcrypt')
+const { iterationTime } = require('../config/constant')
 
 function addSaltToPwd(password) {
+
   return new Promise((resolve, reject) => {
-    // 随机生成 salt , 并迭代 10 次 ( 注意 genSalt 和 hash 方法都是异步的 , 无法使用 await )
-    bcrypt.genSalt(10, (err, salt) => {
+
+    // 随机生成salt，迭代次数 iterationTime，genSalt & hash 均为异步
+    bcrypt.genSalt(iterationTime, (err, salt) => {
+
       if (err) {
-        reject(err);
-      } else {
-        // 给密码加盐
-        bcrypt.hash(password, salt, (err, hash) => {
-          if (err) {
-            reject(err);
-          } else {
-            // 加盐加密成功
-            resolve(hash);
-          }
-        });
+        reject(err)
+        return
       }
-    });
-  });
+
+      // 加盐加密
+      bcrypt.hash(password, salt, (err, hash) => {
+        if (err) {
+          reject(err)
+          return
+        }
+        resolve(hash)
+      })
+
+    })
+  })
 }
 
-module.exports = addSaltToPwd;
+module.exports = addSaltToPwd

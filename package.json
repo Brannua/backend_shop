@@ -4,6 +4,7 @@
   "description": "Koa2搭建的移动端农机商城后端项目",
   "main": "index.js",
   "scripts": {
+    "dev": "nodemon ./index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "lpj",

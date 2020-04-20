@@ -1,16 +1,25 @@
-const Router = require('koa-router');
-let router = new Router();
+/**
+ * @description 路由入口文件
+ * @author Brannua
+ */
 
-// 加载控制器
-let user = require('../controller/user.js');
-let product = require('../controller/product.js');
-let type = require('../controller/type.js');
-let cart = require('../controller/cart.js');
+const Router = require('koa-router')
+let router = new Router()
 
-// 配置路由和对应的控制器
-router.use('/user', user.routes());
-router.use('/product', product.routes());
-router.use('/type', type.routes());
-router.use('/cart', cart.routes());
+// 分模块导入路由
+let user = require('../controller/user')
+let product = require('../controller/product')
+let type = require('../controller/type')
+let cart = require('../controller/cart')
 
-module.exports = router;
+// 定义路由前缀，加载路由
+router.use('/user', user.routes())
+router.use('/product', product.routes())
+router.use('/type', type.routes())
+router.use('/cart', cart.routes())
+
+// 测试数据
+let testData = require('../data/data')
+router.use('/test', testData.routes())
+
+module.exports = router

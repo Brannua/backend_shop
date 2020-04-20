@@ -1,17 +1,28 @@
-/* 用户登录密码和数据库密码相比对 , 用于用户登录功能 */
+/**
+ * @description 用户登录 密码校验
+ * @author Brannua
+ */
 
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt')
 
+/**
+ * 登录密码校验
+ * @param {string} loginPwd 用户输入的密码
+ * @param {string} dbPwd 数据库中的密码
+ */
 function comparePwd(loginPwd, dbPwd) {
+
   return new Promise((resolve, reject) => {
+
     bcrypt.compare(loginPwd, dbPwd, (err, isMatch) => {
       if (err) {
-        reject(err);
-      } else {
-        resolve(isMatch);
+        reject(err)
+        return
       }
-    });
-  });
+      resolve(isMatch)
+    })
+
+  })
 }
 
-module.exports = comparePwd;
+module.exports = comparePwd

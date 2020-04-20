@@ -1,56 +1,63 @@
-const Router = require('koa-router'),
-  mongoose = require('mongoose'),
-  addSaltToPwd = require('../utils/addSaltToPwd'),
-  comparePwd = require('../utils/comparePwd');
-let router = new Router();
+/**
+ * @description user controller
+ * @author Brannua
+ */
 
+const Router = require('koa-router')
+const router = new Router()
+const mongoose = require('mongoose')
+const addSaltToPwd = require('../utils/addSaltToPwd')
+const comparePwd = require('../utils/comparePwd')
+const { registFailInfo, loginPasswordWrongInfo, userNotExistInfo } = require('./_errorInfo')
+
+// 用户注册
 router.post('/registUser', async (ctx) => {
-  /* 接收post请求封装成user对象 */
-  const User = mongoose.model('User');
-  let newUser = new User(ctx.request.body);
-  /* 密码加盐加密 , 也可以在 userSchema 的钩子函数 pre 中实现 */
+
+  const User = mongoose.model('User')
+  let newUser = new User(ctx.request.body)
+
+  // 密码加盐加密，也可以在 userSchema 的钩子函数 pre 中实现
   newUser.passWord = await addSaltToPwd(newUser.passWord)
-  /* 使用save保存密码加密后的用户信息 */
-  await newUser.save().then(() => {
-    ctx.body = {
-      code: 200,
-      message: '注册成功'
-    }
-  }).catch((err) => {
-    ctx.body = {
-      code: 500,
-      message: err
-    }
-  });
-});
 
-router.post('/loginUser', async (ctx) => {
-  const User = mongoose.model('User');
-  let { userName, passWord } = ctx.request.body;
-  // 先查找数据库中对应的用户名 , 用户名存在再继续比对密码
-  await User.findOne({ userName }).exec().then(async (result) => {
-    if (result) {
-      await comparePwd(passWord, result.passWord).then((isMatch) => {
-        if (isMatch) {
-          ctx.body = {
-            code: 200,
-            message: '登陆成功',
-            userInfo: result,
-          }
-        } else {
-          ctx.body = {
-            code: 401,
-            message: '密码错误'
-          }
-        }
-      })
-    } else {
+  await newUser.save()
+    .then(() => {
       ctx.body = {
-        code: 404,
-        message: '用户名不存在'
+        code: 200,
+        message: '注册成功'
       }
-    }
-  });
-});
+    }).catch((err) => {
+      console.error(err)
+      ctx.body = registFailInfo
+    })
 
-module.exports = router;
+})
+
+// 用户登录
+router.post('/loginUser', async (ctx) => {
+
+  const User = mongoose.model('User')
+  const { userName, passWord } = ctx.request.body
+
+  // 先查找数据库中对应的用户名，用户名存在再继续比对密码
+  await User.findOne({ userName }).exec().then(
+    async (result) => {
+      if (result) {
+        await comparePwd(passWord, result.passWord)
+          .then((isMatch) => {
+            if (isMatch) {
+              ctx.body = {
+                code: 200,
+                message: '登陆成功',
+                userInfo: result,
+              }
+              return
+            }
+            ctx.body = loginPasswordWrongInfo
+          })
+        return
+      }
+      ctx.body = userNotExistInfo
+    })
+})
+
+module.exports = router

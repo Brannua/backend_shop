@@ -1,6 +1,15 @@
-const glob = require('glob'),
-  path = require('path');
+/**
+ * @description 加载所有数据模型
+ * @author Brannua
+ */
+
+const glob = require('glob')
+const path = require('path')
 
 module.exports = () => {
-  glob.sync(path.resolve(__dirname, '../model', '*.js')).forEach(require);
+
+  const allModelFiles = path.resolve(__dirname, '..', 'model', '*.js')
+
+  glob.sync(allModelFiles).forEach(require)
+
 }

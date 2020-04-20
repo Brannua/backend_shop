@@ -1,7 +1,12 @@
-const mongoose = require('mongoose'),
-  Schema = mongoose.Schema;
+/**
+ * @description 农机商品 数据模型
+ * @author Brannua
+ */
 
-// 创建模型
+const mongoose = require('mongoose')
+const Schema = mongoose.Schema
+
+// 定义数据模型
 const productSchema = new Schema({
   id: Schema.Types.ObjectId,
   typeId: Number,
@@ -10,7 +15,7 @@ const productSchema = new Schema({
   price: Number,
   company: String,
   city: String,
-});
+})
 
-// 发布模型
-mongoose.model('Product', productSchema);
+// 发布数据模型
+mongoose.model('Product', productSchema)
