@@ -1,7 +1,7 @@
 const Router = require('koa-router'),
   mongoose = require('mongoose'),
-  addSaltToPwd = require('../bcrypt/addSaltToPwd.js'),
-  comparePwd = require('../bcrypt/comparePwd.js');
+  addSaltToPwd = require('../utils/addSaltToPwd'),
+  comparePwd = require('../utils/comparePwd');
 let router = new Router();
 
 router.post('/registUser', async (ctx) => {

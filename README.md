@@ -151,7 +151,7 @@
     // handle in /bcrypt/bcrypt.js
 
     // use in /controller/user.js
-    const addSaltToPwd = require('../bcrypt/bcrypt.js');
+    const addSaltToPwd = require('../utils/bcrypt.js');
     
     const User = mongoose.model('User');
     let newUser = new User(ctx.request.body);
