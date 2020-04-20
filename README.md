@@ -62,7 +62,7 @@
 
 - es7 异步编程 async/await 解决 callbackHell , 执行 async 函数返回 Promise 对象
 
-  ```
+  ```js
   // demo
   function timeOut() {
     return new Promise(resolve => {
