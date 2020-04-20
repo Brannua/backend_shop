@@ -22,6 +22,10 @@ function readJsonFileThenSaveToDB(filePath, Model) {
 
     data = JSON.parse(data)
 
+    // 计数器
+    let successCount = 0
+    let failCount = 0
+
     data.map((value, index) => {
 
       let item = new Model(value)
@@ -32,9 +36,15 @@ function readJsonFileThenSaveToDB(filePath, Model) {
       }
 
       item.save()
-        .then(() => {})
+        .then(() => {
+          console.log(
+            `success: ${++ successCount}`
+          )
+        })
         .catch((err) => {
-          console.log(`fail: ${err}`)
+          console.log(
+            `fail: ${++ failCount}`
+          )
         })
 
     })

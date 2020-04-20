@@ -19,7 +19,7 @@ router.get('/readAndSaveProductData', async (ctx) => {
 // type.json
 router.get('/readAndSaveTypeData', async (ctx) => {
   let filePath = path.resolve(__dirname, 'type.json')
-  saveJsonDataToDB(filePath, mongoose.model('Type'))
+  _saveJsonDataToDB(filePath, mongoose.model('Type'))
   ctx.body = '数据开始导入数据库'
 })
 

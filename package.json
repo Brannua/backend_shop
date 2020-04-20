@@ -1,7 +1,7 @@
 {
   "name": "backend_shop",
   "version": "1.0.0",
-  "description": "Koa2搭建的移动端农机商城后端项目",
+  "description": "原生Koa2搭建的移动端农机商城后端项目",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon ./index.js",
@@ -17,5 +17,8 @@
     "koa-router": "^8.0.6",
     "koa2-cors": "^2.0.6",
     "mongoose": "^5.8.11"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.3"
   }
 }
