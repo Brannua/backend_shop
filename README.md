@@ -1,4 +1,4 @@
-# 移动端农机商城后端 ( 原生Koa2 )
+# 移动端农机商城后端项目
 
 > [项目文档和开发笔记总结请移步此处](https://blog.csdn.net/Brannua/article/details/105678906)
 
